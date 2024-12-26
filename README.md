@@ -1,6 +1,6 @@
 # Conversation Tree
 
-**Conversation Tree** is a project that uses a LLM to facilitate tree-like conversations for project structuring.
+**Conversation Tree** is a project that uses a LLM to facilitate tree-like conversations for top-down project structuring.
 Instead of linear conversations, this tool allows users to branch conversations out into multiple threads, while maintaining the context window, aiding in the iterative development of project components.
 
 ---

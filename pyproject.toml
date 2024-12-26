@@ -1,0 +1,10 @@
+[project]
+name = "conversation-tree"
+version = "0.1.0"
+description = "Conversation Tree is a project that uses a LLM to facilitate tree-like conversations for project structuring."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.58.1",
+    "python-dotenv>=1.0.1",
+]

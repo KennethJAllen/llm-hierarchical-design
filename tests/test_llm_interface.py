@@ -18,8 +18,8 @@ def test_query_llm():
     response = llm.query_llm(test_message)
     assert response == expected_response
 
-@pytest.fixture
-def sample_messages():
+@pytest.fixture(name='sample_messages')
+def fixture_sample_messages():
     messages = [{'role': 'user',
                  'content': 'This is my first message. I will refer back to it later.'},
                 {'role': 'assistant',

@@ -8,8 +8,8 @@ def test_node_creation():
     assert node.get_response() == "Test Response"
     assert len(node.get_children()) == 0
 
-@pytest.fixture
-def sample_root() -> conv.ConversationNode:
+@pytest.fixture(name='sample_root')
+def fixture_sample_root() -> conv.ConversationNode:
     thread_root = conv.ConversationNode("Root prompt.", "Root response.")
     thread_a = thread_root.add_child("Prompt A", "Response A")
     thread_b = thread_root.add_child("Prompt B", "Response B")
@@ -18,8 +18,8 @@ def sample_root() -> conv.ConversationNode:
     thread_b1 = thread_b.add_child("Prompt B1", "Response B1")
     return thread_root
 
-@pytest.fixture
-def sample_leaf(sample_root):
+@pytest.fixture(name='sample_leaf')
+def fixture_sample_leaf(sample_root):
     thread_a2 = sample_root.get_children()[0].get_children()[1]
     return thread_a2
 

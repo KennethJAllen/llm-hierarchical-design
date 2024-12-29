@@ -43,6 +43,15 @@ class ConversationNode:
         response_message = {"role": "assistant", "content": self._response}
         return [prompt_message, response_message]
 
+    def delete(self) -> None:
+        """
+        Removes the node and all children nodes from the tree by setting parent and children to None, and removing from parent node list.
+        """
+        # remove from parent's list of children
+        self._parent._children.remove(self)
+        self._parent = None
+        self._children = None
+
     def __repr__(self):
         return f"ConversationNode(prompt={self._prompt},response={self._response})"
 

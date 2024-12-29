@@ -18,6 +18,11 @@ def fixture_sample_root() -> conv.ConversationNode:
     thread_b.add_child("Prompt B1", "Response B1") # thread B1
     return tree_root
 
+@pytest.fixture(name='sample_thread')
+def fixture_sample_thread(sample_root) -> conv.ConversationNode:
+    thread_a = sample_root.get_children()[0]
+    return thread_a
+
 @pytest.fixture(name='sample_leaf')
 def fixture_sample_leaf(sample_root):
     thread_a2 = sample_root.get_children()[0].get_children()[1]
@@ -35,3 +40,10 @@ def test_get_thread_messages(sample_leaf):
     expected_messages.append({'role': 'user', 'content': 'Prompt A2'})
     expected_messages.append({'role': 'assistant', 'content': 'Response A2'})
     assert conv.generate_thread_messages(sample_leaf) == expected_messages
+
+def test_delete(sample_thread):
+    root = sample_thread.get_parent()
+    sample_thread.delete()
+    assert sample_thread.get_parent() is None
+    assert sample_thread.get_children() is None
+    assert len(root.get_children()) == 1

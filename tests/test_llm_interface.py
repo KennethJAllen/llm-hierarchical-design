@@ -20,16 +20,12 @@ def test_query_llm():
 
 @pytest.fixture(name='sample_messages')
 def fixture_sample_messages():
-    messages = [{'role': 'user',
-                 'content': 'This is my first message. I will refer back to it later.'},
-                {'role': 'assistant',
-                 'content': "Got it! I'll remember this is your first message for future reference. Let me know how I can assist you!"},
-                {'role': 'user',
-                 'content': 'This is my second message. I will refer back to it later.'},
-                {'role': 'assistant',
-                 'content': 'Understood! This is your second message. Feel free to reference it anytime.'},
-                {'role': 'user',
-                 'content': 'Repeat back to my my messages in order'}]
+    messages = []
+    messages.append({'role': 'user', 'content': 'This is my first message. I will refer back to it later.'})
+    messages.append({'role': 'assistant','content': "Got it! I'll remember this is your first message for future reference."})
+    messages.append({'role': 'user','content': 'This is my second message. I will refer back to it later.'})
+    messages.append({'role': 'assistant','content': 'Understood! This is your second message. Feel free to reference it anytime.'})
+    messages.append({'role': 'user','content': 'Repeat back to my my messages in order'})
     return messages
 
 def test_message_order(sample_messages):

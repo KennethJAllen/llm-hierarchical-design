@@ -1,5 +1,5 @@
 from __future__ import annotations  # Enables postponed evaluation of type hints
-import llm_interface as llm
+from conversation_tree import llm_interface as llm
 
 class ConversationNode:
     """Contains the conversation tree logic."""

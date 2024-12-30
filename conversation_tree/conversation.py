@@ -1,8 +1,9 @@
 from __future__ import annotations  # Enables postponed evaluation of type hints
+import llm_interface as llm
 
 class ConversationNode:
     """Contains the conversation tree logic."""
-    def __init__(self, prompt: str, response: str):
+    def __init__(self, prompt: str, response: str = ""):
         self._prompt = prompt
         self._response = response
         self._parent = None
@@ -52,6 +53,13 @@ class ConversationNode:
         self._parent = None
         self._children = None
 
+    def generate_response_from_llm(self) -> None:
+        """Query the LLM with the node's prompt and sets the llm's output to the response."""
+        # Generate the context window.
+        messsages = generate_thread_messages(self)
+        response = llm.query_llm(messsages)
+        self._response = response
+
     def __repr__(self):
         return f"ConversationNode(prompt={self._prompt},response={self._response})"
 
@@ -61,14 +69,8 @@ def generate_thread_messages(node: ConversationNode) -> list[dict[str, str]]:
         messages = generate_thread_messages(node.get_parent())
     else:
         messages = []
+        messages.append({"role": "system", "content": "You are a project assistant."})
     return messages + node.to_message()
 
 if __name__ == "__main__":
-    thread_root = ConversationNode("Root prompt.", "Root response.")
-    thread_a = thread_root.add_child("Prompt A", "Response A")
-    thread_b = thread_root.add_child("Prompt B", "Response B")
-    thread_a1 = thread_a.add_child("Prompt A1", "Response A1")
-    thread_a2 = thread_a.add_child("Prompt A2", "Response A2")
-    thread_b1 = thread_b.add_child("Prompt B1", "Response B1")
-    test_messages = generate_thread_messages(thread_a2)
-    print(test_messages)
+    pass

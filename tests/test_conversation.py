@@ -19,19 +19,19 @@ def fixture_sample_root() -> conv.ConversationNode:
     return tree_root
 
 @pytest.fixture(name='sample_thread')
-def fixture_sample_thread(sample_root) -> conv.ConversationNode:
+def fixture_sample_thread(sample_root: conv.ConversationNode) -> conv.ConversationNode:
     thread_a = sample_root.get_children()[0]
     return thread_a
 
 @pytest.fixture(name='sample_leaf')
-def fixture_sample_leaf(sample_root):
+def fixture_sample_leaf(sample_root: conv.ConversationNode):
     thread_a2 = sample_root.get_children()[0].get_children()[1]
     return thread_a2
 
-def test_get_root(sample_leaf, sample_root):
+def test_get_root(sample_leaf: conv.ConversationNode, sample_root: conv.ConversationNode):
     assert sample_leaf.get_root() is sample_root
 
-def test_get_thread_messages(sample_leaf):
+def test_get_thread_messages(sample_leaf: conv.ConversationNode):
     expected_messages = []
     expected_messages.append({'role': 'user', 'content': 'Root prompt.'})
     expected_messages.append({'role': 'assistant', 'content': 'Root response.'})
@@ -41,9 +41,16 @@ def test_get_thread_messages(sample_leaf):
     expected_messages.append({'role': 'assistant', 'content': 'Response A2'})
     assert conv.generate_thread_messages(sample_leaf) == expected_messages
 
-def test_delete(sample_thread):
+def test_delete(sample_thread: conv.ConversationNode):
     root = sample_thread.get_parent()
     sample_thread.delete()
     assert sample_thread.get_parent() is None
     assert sample_thread.get_children() is None
     assert len(root.get_children()) == 1
+
+def test_get_thread(sample_leaf: conv.ConversationNode):
+    thread = sample_leaf.get_thread()
+    root = sample_leaf.get_root()
+    expected_thread = [root, root.get_children()[0], sample_leaf]
+    thread = sample_leaf.get_thread()
+    assert thread == expected_thread

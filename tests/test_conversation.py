@@ -1,6 +1,6 @@
 """Tests for conversation.py."""
 import pytest
-from conversation_tree import conversation as conv
+from src import conversation as conv
 
 def test_node_creation():
     node = conv.ConversationNode("Test Prompt", "Test Response")

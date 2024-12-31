@@ -1,7 +1,7 @@
 """Streamlit frontend for hierarchical software planner."""
 import streamlit as st
-from conversation_tree import conversation as conv
-from conversation_tree import llm_interface as llm
+from src import conversation as conv
+from src import llm_interface as llm
 
 def initialize_session_state():
     """Initializes the session state variables."""

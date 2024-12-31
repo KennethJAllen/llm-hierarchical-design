@@ -1,6 +1,6 @@
 """Tests for llm_interface.py."""
 import pytest
-from conversation_tree import llm_interface as llm
+from src import llm_interface as llm
 
 def test_format_query():
     test_query = 'Respond with "test".'

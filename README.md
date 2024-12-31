@@ -29,12 +29,20 @@ graph LR;
     A2-->B[Module B];
     B-->B1[Function B1];
 ```
-### Alternatives
-ChatGPT's edit feature can mimic a tree-like conversation by strategically editing queries. However, this only keeps your current branch in the context window. This means that chatgpt is unaware of the other components in the project.
+
+### Proposed Solution
+To solve the issue of linearizing a complicated component tree, this project uses the following structure for the context window when, for example, working on functions in module B.
+
+```mermaid
+graph LR;
+    S[Project Component Summary]-->R[Project Root]
+    R-->B[Module B];
+    B-->B1[Function B1];
+```
 
 ## Features
 - Supports branching conversations for hierarchical project planning.
-- Keeps the entire conversation tree within the context window.
+- Keeps information about the entire conversation tree within the context window.
 
 ## Prerequisites
 Before using this project, ensure you have:
@@ -63,3 +71,14 @@ OPENAI_API_KEY=your_openai_api_key
 ```
 
 Replace `your_openai_api_key` with your actual OpenAI API key.
+
+## Alternatives
+OpenAI's ChatGPT supports an edit feature that can mimic a tree-like conversation by strategically editing queries. However, this only keeps your current branch in the context window. This means that chatgpt is unaware of the other components in the project.
+
+Anthropic's Claude currently does not support an edit feature to mimic hierarchical conversations.
+
+## How to Run
+
+This project uses streamlit for the UI. To open the UI, use:
+
+`streamlit run main.py`

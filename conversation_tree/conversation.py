@@ -31,7 +31,7 @@ class ConversationNode:
             return self
         return self._parent.get_root()
 
-    def add_child(self, prompt: str, response: str):
+    def add_child(self, prompt: str, response: str = ""):
         """Adds a child node."""
         child = ConversationNode(prompt, response)
         child._parent = self
@@ -43,6 +43,15 @@ class ConversationNode:
         prompt_message = {"role": "user", "content": self._prompt}
         response_message = {"role": "assistant", "content": self._response}
         return [prompt_message, response_message]
+
+    def get_thread(self):
+        """Returns a list of all nodes leading to this node starting from the root."""
+        if self.get_parent() is not None:
+            thread = self.get_parent().get_thread()
+        else:
+            thread = []
+        thread.append(self)
+        return thread
 
     def delete(self) -> None:
         """

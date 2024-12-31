@@ -1,7 +1,7 @@
 [project]
-name = "conversation-tree"
+name = "llm-hierarchical-design"
 version = "0.1.0"
-description = "Conversation Tree is a project that uses a LLM to facilitate tree-like conversations for project structuring."
+description = "LLM Hierarchical Design is a project that uses a LLM to facilitate tree-like conversations for project structuring."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

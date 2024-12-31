@@ -10,13 +10,13 @@ def format_query(query: str) -> dict[str, str]:
 
 def query_llm(messages: list[dict[str,str]], model="gpt-4o-mini") -> str:
     """Queries the LLM and returns the response as a string."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    client = OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
-        messages = messages,
-        model = model)
-    response = response.choices[0].message.content
-    #response = "test"
+    # api_key = os.getenv("OPENAI_API_KEY")
+    # client = OpenAI(api_key=api_key)
+    # response = client.chat.completions.create(
+    #     messages = messages,
+    #     model = model)
+    # response = response.choices[0].message.content
+    response = "test"
     return response
 
 def generate_initial_prompt(user_input: str) -> str:

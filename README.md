@@ -1,6 +1,7 @@
-# Conversation Tree
+#  LLM Hierarchical Design
 
-**Conversation Tree** uses LLMs to facilitate tree-like conversations for top-down hierarchical project structuring.
+
+**LLM Hierarchical Design** uses LLMs to facilitate tree-like conversations for top-down hierarchical project structuring.
 
 This tool allows users to branch conversations out into multiple threads while maintaining the context window, aiding in the iterative development of project components.
 

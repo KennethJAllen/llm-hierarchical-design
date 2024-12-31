@@ -36,7 +36,7 @@ def main():
     if st.session_state.current_node is None:
         # Initial project setup
         st.write("Let's plan your software project.")
-        project_description = st.text_area("What would you like to build?")
+        project_description = st.text_input("What would you like to build?")
         
         if project_description.strip() and st.button("Start Planning"):
             initial_prompt = f"""Project Goal: {project_description}
@@ -64,7 +64,7 @@ def main():
         st.write("---")
         st.subheader("Add new branch")
         with st.form(key="new_branch"):
-            prompt = st.text_area(
+            prompt = st.text_input(
                 "What aspect would you like to explore or break down further?",
                 key="new_prompt"
             )

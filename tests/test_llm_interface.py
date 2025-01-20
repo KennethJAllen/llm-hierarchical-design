@@ -19,7 +19,7 @@ def test_query_llm():
     assert response == expected_response
 
 @pytest.fixture(name='sample_messages')
-def fixture_sample_messages():
+def fixture_sample_messages() -> list[dict[str,str]]:
     messages = []
     messages.append({'role': 'user', 'content': 'This is my first message. I will refer back to it later.'})
     messages.append({'role': 'assistant','content': "Got it! I'll remember this is your first message for future reference."})
@@ -36,6 +36,8 @@ def test_message_order(sample_messages):
     response = llm.query_llm(sample_messages)
     first_message_index = response.find('first')
     second_message_index = response.find('second')
+    # check that the words 'first' and 'second' exist in the message.
     assert first_message_index != -1
     assert second_message_index != -1
+    # Checl that the word 'first' comes before the word 'second'.
     assert first_message_index < second_message_index

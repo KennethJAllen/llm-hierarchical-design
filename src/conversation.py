@@ -80,6 +80,3 @@ def generate_thread_messages(node: ConversationNode) -> list[dict[str, str]]:
         messages = []
         messages.append({"role": "system", "content": "You are a project assistant."})
     return messages + node.to_message()
-
-if __name__ == "__main__":
-    pass

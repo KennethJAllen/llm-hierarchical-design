@@ -33,6 +33,7 @@ def test_get_root(sample_leaf: conv.ConversationNode, sample_root: conv.Conversa
 
 def test_get_thread_messages(sample_leaf: conv.ConversationNode):
     expected_messages = []
+    expected_messages.append({"role": "system", "content": "You are a project assistant."})
     expected_messages.append({'role': 'user', 'content': 'Root prompt.'})
     expected_messages.append({'role': 'assistant', 'content': 'Root response.'})
     expected_messages.append({'role': 'user', 'content': 'Prompt A'})

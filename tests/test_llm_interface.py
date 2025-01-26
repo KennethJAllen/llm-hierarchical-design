@@ -28,12 +28,26 @@ def fixture_sample_messages() -> list[dict[str,str]]:
     messages.append({'role': 'user','content': 'Repeat back to my my messages in order'})
     return messages
 
-def test_message_order(sample_messages):
+def test_message_order_openai(sample_messages):
     """
     Tests the order that messages are input.
     Due to the randomness of LLMs, there is a chance this can fail.
     """
-    response = llm.query_llm(sample_messages)
+    response = llm.query_llm(sample_messages, model="gpt-4o-mini")
+    first_message_index = response.find('first')
+    second_message_index = response.find('second')
+    # check that the words 'first' and 'second' exist in the message.
+    assert first_message_index != -1
+    assert second_message_index != -1
+    # Checl that the word 'first' comes before the word 'second'.
+    assert first_message_index < second_message_index
+
+def test_message_order_anbthropic(sample_messages):
+    """
+    Tests the order that messages are input.
+    Due to the randomness of LLMs, there is a chance this can fail.
+    """
+    response = llm.query_llm(sample_messages, model="claude-3-5-haiku-latest")
     first_message_index = response.find('first')
     second_message_index = response.find('second')
     # check that the words 'first' and 'second' exist in the message.

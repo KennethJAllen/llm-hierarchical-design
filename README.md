@@ -71,15 +71,21 @@ The project requires an OpenAI API key. Create a .env file in the root directory
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-Replace `your_openai_api_key` with your actual OpenAI API key.
+if using an Anthropic API key, instead create a .env file in the root directory of the project with contents:
 
-## Alternatives
-OpenAI's ChatGPT supports an edit feature that can mimic a tree-like conversation by strategically editing queries. However, this only keeps your current branch in the context window. This means that chatgpt is unaware of the other components in the project.
+```makefile
+OPENAI_API_KEY=your_anthropic_api_key
+```
 
-Anthropic's Claude currently does not support an edit feature to mimic hierarchical conversations.
+Replace `your_openai_api_key` with your actual OpenAI API key, or `your_anthropic_api_key` with your actual Anthropic API key.
+
+If both API keys are included, defaults to the openai api key.
 
 ## How to Run
 
 This project uses streamlit for the UI. To open the UI, use:
 
 `streamlit run main.py`
+
+## Alternatives
+OpenAI's ChatGPT and Anthropic's Claude both support an edit feature that can mimic a tree-like conversation by strategically editing queries. However, this only keeps your current branch in the context window. This means that ChatGPT and Claude would be unaware of the details of different components in the project.

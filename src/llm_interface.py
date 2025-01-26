@@ -2,8 +2,8 @@
 
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
-from anthropic import Anthropic
+import openai
+import anthropic
 
 load_dotenv() # Load environment variables from a .env file
 
@@ -11,7 +11,7 @@ def format_query(query: str) -> dict[str, str]:
     """Formats the query string for input into messages."""
     return {'role': 'user', 'content': query}
 
-def query_llm(messages: list[dict[str,str]], model="gpt-4o-mini") -> str:
+def query_llm(messages: list[dict[str,str]], model=None) -> str:
     """
     Queries the LLM and returns the response as a string.
     inputs:
@@ -20,23 +20,45 @@ def query_llm(messages: list[dict[str,str]], model="gpt-4o-mini") -> str:
             Currently supported models are gpt and claude.
             e.g. model = "gpt-4o-mini" or "claude-3-5-haiku-latest"
     """
-    if model[:3] == 'gpt':
-        api_key = os.getenv("OPENAI_API_KEY")
-        client = OpenAI(api_key=api_key)
-        completion = client.chat.completions.create(
-            messages = messages,
-            model = model)
-        response = completion.choices[0].message.content
-    elif model[:6] == 'claude':
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        client = Anthropic(api_key=api_key)
-        completion = client.messages.create(
-            max_tokens = 1024,
-            messages = messages,
-            model = model)
-        response = completion.content[0].text
-    else:
-        raise ValueError(f"Model not currently supported: {model}")
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key is not None:
+        try:
+            response = _query_openai_llm(messages, api_key, model=model)
+            return response
+        except openai.NotFoundError:
+            pass
+
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if api_key is not None:
+        try:
+            response = _query_anthropic_llm(messages, api_key, model=model)
+            return response
+        except anthropic.NotFoundError:
+            pass
+
+    raise ValueError("API key not found or model not valid. If missing, create a .env file in the project's root directory with an OPENAI_API_KEY or an ANTHROPIC_API_KEY.")
+
+def _query_openai_llm(messages: list[dict[str,str]], api_key: str, model: str=None) -> str:
+    """Query the OpenAI api with the given message and model (if provided)."""
+    if model is None:
+        model = "gpt-4o-mini"
+    client = openai.OpenAI(api_key=api_key)
+    completion = client.chat.completions.create(
+        messages = messages,
+        model = model)
+    response = completion.choices[0].message.content
+    return response
+
+def _query_anthropic_llm(messages: list[dict[str,str]], api_key: str, model: str=None) -> str:
+    """Query the Anthropic api with the given message and model (if provided)."""
+    if model is None:
+        model = "claude-3-5-haiku-latest"
+    client = anthropic.Anthropic(api_key=api_key)
+    completion = client.messages.create(
+        max_tokens = 1024,
+        messages = messages,
+        model = model)
+    response = completion.content[0].text
     return response
 
 def generate_initial_prompt(user_input: str) -> str:

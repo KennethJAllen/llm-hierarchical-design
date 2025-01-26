@@ -1,3 +1,5 @@
+"""Contains the logic for the LLM interface."""
+
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -26,7 +28,6 @@ def query_llm(messages: list[dict[str,str]], model="gpt-4o-mini") -> str:
             model = model)
         response = completion.choices[0].message.content
     elif model[:6] == 'claude':
-        # TODO: fix logic in rest of this function to be compatible with Anthropic API key
         api_key = os.getenv("ANTHROPIC_API_KEY")
         client = Anthropic(api_key=api_key)
         completion = client.messages.create(
@@ -58,7 +59,6 @@ def generate_initial_prompt(user_input: str) -> str:
 
 if __name__ == "__main__":
     test_prompt = generate_initial_prompt("Create a hierarchical conversation project with an LLM.")
-    message = format_query(test_prompt)
-    response = query_llm([message], model="claude-3-5-haiku-latest")
-    #response = query_llm([message])
-    print(response)
+    test_message = format_query(test_prompt)
+    test_response = query_llm([test_message], model="claude-3-5-haiku-latest")
+    print(test_response)
